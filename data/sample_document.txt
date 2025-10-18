@@ -1,0 +1,42 @@
+# Sample Document for RAG Testing
+
+## Introduction
+This is a sample document created for testing the RAG (Retrieval-Augmented Generation) chatbot system. The document contains various topics to demonstrate the system's ability to process and retrieve information.
+
+## Machine Learning
+Machine learning is a subset of artificial intelligence that focuses on algorithms that can learn from data. There are three main types of machine learning:
+
+1. **Supervised Learning**: Uses labeled training data to learn a mapping from inputs to outputs.
+2. **Unsupervised Learning**: Finds hidden patterns in data without labeled examples.
+3. **Reinforcement Learning**: Learns through interaction with an environment using rewards and penalties.
+
+## Natural Language Processing
+Natural Language Processing (NLP) is a field of AI that focuses on the interaction between computers and human language. Key areas include:
+
+- Text classification
+- Sentiment analysis
+- Named entity recognition
+- Machine translation
+- Question answering systems
+
+## Vector Databases
+Vector databases are specialized databases designed to store and query high-dimensional vectors efficiently. They are essential for:
+
+- Semantic search
+- Recommendation systems
+- Similarity matching
+- Embedding storage
+
+Popular vector databases include ChromaDB, Pinecone, Weaviate, and Qdrant.
+
+## Retrieval-Augmented Generation (RAG)
+RAG is a technique that combines retrieval and generation to improve the quality of language model responses. The process involves:
+
+1. **Document Ingestion**: Converting documents into searchable chunks
+2. **Embedding Generation**: Creating vector representations of text chunks
+3. **Vector Storage**: Storing embeddings in a vector database
+4. **Retrieval**: Finding relevant chunks for user queries
+5. **Generation**: Using retrieved context to generate accurate responses
+
+## Conclusion
+This sample document demonstrates various AI and machine learning concepts that can be used to test the RAG system's ability to retrieve relevant information and generate accurate responses to user queries.

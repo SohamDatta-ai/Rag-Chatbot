@@ -1,0 +1,8 @@
+# virtual env + cache
+.venv/
+__pycache__/
+chroma_db/
+# secrets
+.env
+# Streamlit cache
+.streamlit/
