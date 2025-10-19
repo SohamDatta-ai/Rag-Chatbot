@@ -95,3 +95,7 @@ python query_test.py
 2. Run `python ingest.py` to process documents
 3. Run `python query.py` to test retrieval
 4. Build Streamlit chat interface (Step 4)
+
+
+Beta Realease Coming soon
+
