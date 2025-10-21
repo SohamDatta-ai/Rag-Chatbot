@@ -40,88 +40,93 @@ rag-chatbot/
 
    > Upload a PDF. Ask it anything. Watch it answer like ChatGPT — but trained on your doc.
 
-   Think of this as a tiny local ChatGPT for your PDFs. No cloud secrets (unless you opt in), no magic — just you, your docs, and a few open-source building blocks.
+# RAG Chatbot (PDF + Streamlit + GPT-3.5)
 
-   ---
+A local Retrieval-Augmented Generation (RAG) demo that lets you upload PDFs, index them, and ask questions that are answered using document context. Built for experimentation and local use.
 
-   ## 🧭 TL;DR (Hook)
+## Features
 
-   Upload a PDF. Ask it anything. Get grounded answers pulled straight from your document(s).
+- Upload PDF files and automatically index them
+- Chunking + embeddings (sentence-transformers MiniLM)
+- Local ChromaDB vector store (persisted to `chroma_db/`)
+- Retrieval + optional GPT-3.5 (conversational answers)
+- Simple Streamlit UI for quick interactions
 
-   ---
+## Requirements
 
-   ## ⚙️ What it does
+- Python 3.11 (recommended) or Docker
+- An OpenAI API key if you want GPT-3.5 responses
 
-   - 📄 Upload PDFs → automatically indexed
-   - 💬 Chat with your docs using GPT-3.5 (optional)
-   - 🔎 Instant answers grounded in your files (with sources)
-   - 🧠 Keeps short-term conversation memory for follow-ups
-   - 🛠️ Runs locally with Streamlit — no cloud required
+## Quick start (local)
 
-   ---
+1. Create a venv and activate it (PowerShell):
 
-   ## 🧩 How it works (simple breakdown)
+```powershell
+python3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
-   ```
-   📄 PDF → 🔍 Text Splitter → 🧠 Embeddings → 💾 ChromaDB → 🤖 GPT-3.5 → 💬 Answer
-   ```
+2. Create a `.env` with your OpenAI key (optional):
 
-   PDF is split into chunks. Each chunk gets an embedding (vector). Vectors are stored in ChromaDB. When you ask a question, the system finds the most relevant chunks and (optionally) asks GPT-3.5 to synthesize a grounded answer using those chunks as context.
+```
+OPENAI_API_KEY=sk-...
+```
 
-   It’s quick, local, and intentionally minimal — perfect for testing ideas or getting instant answers from docs you actually control.
+3. Run the app:
 
-   ---
+```powershell
+python -m streamlit run app.py
+```
 
-   ## 🚀 Quickstart (for devs)
+Open http://localhost:8501 in your browser.
 
-   Try this — should take < 5 minutes if you already have Python and pip:
+## Quickstart (Docker)
 
-   ```bash
-   git clone https://github.com/SohamDatta-ai/Rag-Chatbot.git
-   cd Rag-Chatbot
-   pip install -r requirements.txt
-   python -m streamlit run app.py
-   ```
+If you prefer containerized runs:
 
-   💡 Make sure you’ve set your `OPENAI_API_KEY` in a local `.env` if you want GPT-3.5 answers.
+```bash
+docker compose build --pull
+docker compose up
+```
 
-   ---
+## Configuration
 
-   ## 🧠 Stack
+- `CHROMA_DIR` defaults to `chroma_db/` and is persisted.
+- Embed model: `sentence-transformers/all-MiniLM-L6-v2` (downloaded on first use).
+- Use `.env` to set `OPENAI_API_KEY` and other env vars.
 
-   - **LangChain** → orchestration
-   - **Chroma** → vector DB
-   - **HuggingFace MiniLM-L6-v2** → embeddings
-   - **GPT-3.5-Turbo** → answers
-   - **Streamlit** → UI
+## Development
 
-   ---
+- Format: `black` and `isort` are used (see `pyproject.toml`).
+- Tests: run `python -m pytest -q`.
+- CI: GitHub Actions workflow (runs tests on Python 3.11) is in `.github/workflows/ci.yml`.
 
-<<<<<<< HEAD
+## Tests
 
+```bash
+python -m pip install -r dev-requirements.txt
+python -m pytest -q
+```
 
-Beta Realease Coming soon
+## Troubleshooting
 
-=======
-   ## 🌍 Future upgrades (features I want to build)
+- If you hit NumPy / torch build errors on Windows, switch to Python 3.11 or use Docker.
+- If model downloads hang, use the sidebar pre-download button in the app UI or install `sentence-transformers` manually.
 
-   - 🔥 Multi-PDF chat (upload a folder)
-   - 💾 Cloud vector DB (Pinecone / FAISS / Weaviate)
-   - 🧠 Personal AI memory (opt-in long-term memory)
-   - ☁️ One-click deploy (Heroku / Docker + GH Actions)
+## Contributing
 
-   ---
+Small pull requests are welcome — please keep changes focused (tests + formatting). Add a GH issue for larger features.
 
-   ## 💬 Credits
+## License
 
-   Built with ❤️ by [Soham Datta](https://github.com/SohamDatta-ai)
+MIT — see `LICENSE`.
 
-   ---
+## Contact
 
-   ## ✅ Example output (tone preview)
+Built by Soham Datta — https://github.com/SohamDatta-ai
 
-   > **“Upload. Ask. Understand.”**
-   >
    > A lightweight RAG chatbot that lets you upload PDFs and chat with them — powered by LangChain, ChromaDB, and GPT-3.5.
    >
    > No setup drama. No cloud fees. Just your data + local brainpower.
