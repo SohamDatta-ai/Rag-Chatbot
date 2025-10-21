@@ -1,23 +1,25 @@
 import os
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
+
 from dotenv import load_dotenv
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Load environment variables
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # For embeddings
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")     # For LLM
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # For LLM
 
 # Directories
 DATA_PATH = "data"
 CHROMA_PATH = "chroma_db"
 
+
 def ingest_documents():
     print("=== RAG DOCUMENT INGESTION WITH GROQ ===")
     print()
-    
+
     # Load documents (PDFs and text files)
     docs = []
     for file in os.listdir(DATA_PATH):
@@ -39,9 +41,7 @@ def ingest_documents():
 
     # Split text into chunks
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
-        separators=["\n\n", "\n", ".", " ", ""]
+        chunk_size=1000, chunk_overlap=200, separators=["\n\n", "\n", ".", " ", ""]
     )
     chunks = text_splitter.split_documents(docs)
     print(f"[INFO] Split into {len(chunks)} chunks")
@@ -51,8 +51,10 @@ def ingest_documents():
         print("[ERROR] OPENAI_API_KEY not found. Need this for embeddings.")
         print("You can get a free OpenAI API key for embeddings only.")
         return
-        
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=OPENAI_API_KEY)
+
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small", openai_api_key=OPENAI_API_KEY
+    )
 
     # Store in ChromaDB
     db = Chroma.from_documents(chunks, embeddings, persist_directory=CHROMA_PATH)
@@ -64,6 +66,7 @@ def ingest_documents():
     print("[OK] Embeddings: Generated")
     print("[OK] ChromaDB: Ready")
     print("[INFO] LLM: Will use Groq for queries")
+
 
 if __name__ == "__main__":
     ingest_documents()

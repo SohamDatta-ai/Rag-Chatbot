@@ -1,3 +1,26 @@
+# Virtual environment
+.venv/
+.venv311/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.so
+
+# Chroma DB persistence
+chroma_db/
+
+# Environment files
+.env
+
+# IDE/editor
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+Thumbs.db
+desktop.ini
 # virtual env + cache
 .venv/
 __pycache__/

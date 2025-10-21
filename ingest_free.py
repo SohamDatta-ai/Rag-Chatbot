@@ -1,9 +1,10 @@
 import os
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+
 from dotenv import load_dotenv
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Load environment variables
 load_dotenv()
@@ -12,10 +13,11 @@ load_dotenv()
 DATA_PATH = "data"
 CHROMA_PATH = "chroma_db"
 
+
 def ingest_documents():
     print("=== RAG DOCUMENT INGESTION (FREE EMBEDDINGS) ===")
     print()
-    
+
     # Load documents (PDFs and text files)
     docs = []
     for file in os.listdir(DATA_PATH):
@@ -37,9 +39,7 @@ def ingest_documents():
 
     # Split text into chunks
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
-        separators=["\n\n", "\n", ".", " ", ""]
+        chunk_size=1000, chunk_overlap=200, separators=["\n\n", "\n", ".", " ", ""]
     )
     chunks = text_splitter.split_documents(docs)
     print(f"[INFO] Split into {len(chunks)} chunks")
@@ -48,7 +48,7 @@ def ingest_documents():
     print("[INFO] Loading embedding model (this may take a moment)...")
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
-        model_kwargs={'device': 'cpu'}
+        model_kwargs={"device": "cpu"},
     )
     print("[OK] Embedding model loaded")
 
@@ -63,6 +63,7 @@ def ingest_documents():
     print("[OK] Embeddings: Generated (free)")
     print("[OK] ChromaDB: Ready")
     print("[INFO] LLM: Will use Groq for queries")
+
 
 if __name__ == "__main__":
     ingest_documents()

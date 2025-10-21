@@ -1,9 +1,10 @@
 import os
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_community.vectorstores import Chroma
-from langchain.prompts import PromptTemplate
-from langchain.chains import RetrievalQA
+
 from dotenv import load_dotenv
+from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
+from langchain_community.vectorstores import Chroma
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 # Load environment variables
 load_dotenv()
@@ -13,7 +14,9 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 CHROMA_PATH = "chroma_db"
 
 # Initialize embeddings and database
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=OPENAI_API_KEY)
+embeddings = OpenAIEmbeddings(
+    model="text-embedding-3-small", openai_api_key=OPENAI_API_KEY
+)
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embeddings)
 
 # Initialize retriever
@@ -35,7 +38,9 @@ Question: {question}
 Answer:
 """
 
-PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+PROMPT = PromptTemplate(
+    template=prompt_template, input_variables=["context", "question"]
+)
 
 # Create RetrievalQA chain
 qa = RetrievalQA.from_chain_type(
@@ -43,8 +48,9 @@ qa = RetrievalQA.from_chain_type(
     chain_type="stuff",
     retriever=retriever,
     chain_type_kwargs={"prompt": PROMPT},
-    return_source_documents=True
+    return_source_documents=True,
 )
+
 
 def ask_question(query):
     result = qa({"query": query})
@@ -52,6 +58,7 @@ def ask_question(query):
     print("\n📚 Sources:")
     for doc in result["source_documents"]:
         print(" -", doc.metadata.get("source", "Unknown file"))
+
 
 if __name__ == "__main__":
     print("Ask a question about your documents:")
