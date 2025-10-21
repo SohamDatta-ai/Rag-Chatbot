@@ -38,7 +38,7 @@ rag-chatbot/
    OPENAI_API_KEY=your_api_key_here
    # RAG Chatbot (PDF + Streamlit + GPT-3.5)
 
-   > Upload a PDF. Ask it anything. Watch it answer like ChatGPT — but trained on your doc.
+
 
 # RAG Chatbot (PDF + Streamlit + GPT-3.5)
 
